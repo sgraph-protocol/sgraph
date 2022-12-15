@@ -1,0 +1,16 @@
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[programs.localnet]
+graph = "graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg"
+usersig = "s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2"
+
+
+[programs.devnet]
+graph = "graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg"
+usersig = "s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2"
+
+[scripts]
+test = "yarn run mocha -t 1000000 tests/"
+init-usersig = "npx ts-node ./programs/usersig/migrations/init.ts"

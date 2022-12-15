@@ -1,0 +1,273 @@
+{
+  "version": "0.1.0",
+  "name": "graph",
+  "instructions": [
+    {
+      "name": "initializeTree",
+      "accounts": [
+        {
+          "name": "tree",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treeController",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "acProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "noopProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initializeProvider",
+      "accounts": [
+        {
+          "name": "provider",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitializeProviderParams"
+          }
+        }
+      ]
+    },
+    {
+      "name": "addRelation",
+      "accounts": [
+        {
+          "name": "provider",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "tree",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treeController",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "acProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "noopProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "AddRelationParams"
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Provider",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "relationsCount",
+            "type": "u64"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "website",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Relation",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "publicKey"
+          },
+          {
+            "name": "to",
+            "type": "publicKey"
+          },
+          {
+            "name": "provider",
+            "type": "publicKey"
+          },
+          {
+            "name": "connectedAt",
+            "type": "i64"
+          },
+          {
+            "name": "disconnectedAt",
+            "type": {
+              "option": "i64"
+            }
+          },
+          {
+            "name": "extra",
+            "type": "bytes"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Controller",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "tree",
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "InitializeProviderParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "website",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddRelationParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "publicKey"
+          },
+          {
+            "name": "to",
+            "type": "publicKey"
+          },
+          {
+            "name": "extra",
+            "type": "bytes"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LeafType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Unknown"
+          },
+          {
+            "name": "RelationV1"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "RelationAlreadyClosed",
+      "msg": "Closing relations twice is unsupported for now"
+    },
+    {
+      "code": 6001,
+      "name": "Overflow",
+      "msg": "Overflow occured"
+    }
+  ],
+  "metadata": {
+    "address": "graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg",
+    "origin": "anchor",
+    "binaryVersion": "0.25.0",
+    "libVersion": "0.25.0"
+  }
+}
