@@ -23,7 +23,7 @@ library/tree/master/account-compression)
 
 ## How it works
 
-<img src="./docs/diagram.png" style="max-width: 800px" alt="graph diagram"/>
+<img src="./docs/sgraph-providers-org.svg" style="max-width: 700px" alt="graph diagram"/>
 
 Imagine that _Alice follows Bob on Platform X_ and _Bob flagged Charlie on Platform Y_. Instead of storing those relations locally on, sgraph allows to share these relations on-chain so _Platform X_, _Platform Y_, and any others apps and users can benefit from that information.
 
