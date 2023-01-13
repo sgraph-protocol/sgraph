@@ -1,9 +1,14 @@
 #![forbid(unsafe_code)]
+#![deny(clippy::all)]
+#![allow(clippy::result_large_err)]
 
 use anchor_lang::{prelude::*, solana_program::keccak, AnchorDeserialize, AnchorSerialize};
 use spl_account_compression::{cpi as spl_ac_cpi, program::SplAccountCompression, Node, Wrapper};
 
 pub use spl_account_compression;
+
+#[cfg(not(feature = "no-entrypoint"))]
+use solana_security_txt::security_txt;
 
 pub const CONTROLLER_SEED: &[u8] = b"controller";
 
@@ -31,7 +36,7 @@ pub mod graph {
         let cpi_ctx = CpiContext::new_with_signer(
             ctx.accounts.ac_program.to_account_info(),
             accounts,
-            &signer_seeds,
+            signer_seeds,
         );
 
         spl_ac_cpi::init_empty_merkle_tree(cpi_ctx, MAX_DEPTH, MAX_BUFFER_SIZE)?;
@@ -94,7 +99,7 @@ pub mod graph {
             .provider
             .relations_count
             .checked_add(1)
-            .ok_or(error!(GraphError::Overflow))?;
+            .ok_or_else(|| error!(GraphError::Overflow))?;
 
         Ok(())
     }
@@ -245,4 +250,16 @@ pub enum GraphError {
     RelationAlreadyClosed,
     #[msg("Overflow occured")]
     Overflow,
+}
+
+#[cfg(not(feature = "no-entrypoint"))]
+security_txt! {
+    name: "sgraph core contract",
+    project_url: "https://sgraph.io",
+    contacts: "email:security@sgraph.io",
+    policy: "Please report (suspected) security vulnerabilities to email above.
+You will receive a response from us within 48 hours.",
+    source_code: "https://github.com/sgraph-protocol/sgraph",
+    source_revision: env!("GIT_HASH"),
+    acknowledgements: "Everyone in the Solana community"
 }

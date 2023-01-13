@@ -18,3 +18,4 @@ default = []
 [dependencies]
 anchor-lang = "0.25.0"
 graph = {path = "../graph", features = ["cpi"]}
+solana-security-txt = "1.1.0"

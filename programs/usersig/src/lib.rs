@@ -1,9 +1,17 @@
+#![forbid(unsafe_code)]
+#![forbid(clippy::integer_arithmetic)]
+#![deny(clippy::all)]
+#![allow(clippy::result_large_err)]
+
 use anchor_lang::prelude::*;
 use graph::{
     program::Graph, spl_account_compression::program::SplAccountCompression,
     spl_account_compression::Wrapper, AddRelationParams, Controller, InitializeProviderParams,
     Provider, CONTROLLER_SEED,
 };
+
+#[cfg(not(feature = "no-entrypoint"))]
+use solana_security_txt::security_txt;
 
 declare_id!("s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2");
 
@@ -126,4 +134,16 @@ impl<'info> SignRelation<'info> {
         };
         CpiContext::new(cpi_program, cpi_accounts)
     }
+}
+
+#[cfg(not(feature = "no-entrypoint"))]
+security_txt! {
+    name: "sgraph usersig",
+    project_url: "https://sgraph.io",
+    contacts: "email:security@sgraph.io",
+    policy: "Please report (suspected) security vulnerabilities to email above.
+You will receive a response from us within 48 hours.",
+    source_code: "https://github.com/sgraph-protocol/sgraph",
+    source_revision: env!("GIT_HASH"),
+    acknowledgements: "Everyone in the Solana community"
 }

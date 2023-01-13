@@ -575,6 +575,7 @@ name = "graph"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
+ "solana-security-txt",
  "spl-account-compression",
 ]
 
@@ -1205,6 +1206,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "solana-security-txt"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e0461f3afb29d8591300b3dd09b5472b3772d65688a2826ad960b8c0d5fa605"
+
+[[package]]
 name = "spl-account-compression"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1306,6 +1313,7 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang",
  "graph",
+ "solana-security-txt",
 ]
 
 [[package]]
