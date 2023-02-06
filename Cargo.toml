@@ -2,3 +2,6 @@
 members = [
   "programs/*"
 ]
+
+[patch.crates-io]
+anchor-lang = { git = "https://github.com/coral-xyz/anchor/", rev = "347c225a27a4c615479f3c0de372604b314cbd4f" }

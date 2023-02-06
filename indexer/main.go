@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/ed25519"
 	"errors"
 	"fmt"
 	"os"
@@ -16,7 +15,6 @@ import (
 	"github.com/cristalhq/aconfig"
 	"github.com/go-pkgz/lgr"
 	"github.com/gomodule/redigo/redis"
-	"github.com/portto/solana-go-sdk/common"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
@@ -24,8 +22,6 @@ import (
 	"github.com/sgraph-protocol/sgraph/indexer/repo"
 	"github.com/sgraph-protocol/sgraph/indexer/srv"
 	graph "github.com/sgraph-protocol/sgraph/sdk/go"
-
-	"golang.org/x/exp/constraints"
 
 	"net/http"
 	_ "net/http/pprof"
@@ -383,49 +379,6 @@ func (h *BlockHarvester) HarvestBlocks(ctx context.Context) error {
 	}
 }
 
-type ParsedEvent struct {
-	// Involved user
-	InvolvedUser ed25519.PublicKey
-	// Event kind
-	Kind eventKind
-	// Extra values event could have
-	Extra map[string]any
-}
-
-type eventKind string
-
-// * swap
-// * buy
-// * send/receive tokens
-// * send/receive SOL
-// * stake/unstake
-const (
-	Buy     eventKind = "BUY"
-	Send    eventKind = "SEND"
-	Receive eventKind = "RECEIVE"
-	// NFT repost rewards
-	RewardsReceived eventKind = "REWARDS_RECEIVED"
-	// Split distribution was credited to user voucher
-	SplitReceived eventKind = "SPLIT_RECEIVED"
-	// Split voucher balance was claimed by user
-	SplitClaimed eventKind = "SPLIT_CLAIMED"
-	// Split distributed
-	SplitDistributed eventKind = "SPLIT_DISTRIBUTED"
-	// Treasury has received something
-	TreasuryReceive eventKind = "TREASURY_RECEIVE"
-)
-
-func abs[N constraints.Signed](n N) N {
-	if n < 0 {
-		return -n
-	}
-	return n
-}
-
-func toCommonPub(pub ed25519.PublicKey) common.PublicKey {
-	return *(*common.PublicKey)(pub)
-}
-
 func keys[K comparable, V any](m map[K]V) []K {
 	keys := make([]K, 0, len(m))
 	for key := range m {
@@ -441,36 +394,6 @@ func values[K comparable, V any](m map[K]V) []V {
 	}
 	return values
 }
-
-// func runHealthz(mongoClient *mongo.Client, redisPool *redis.Pool, l lgr.L) {
-// 	mux := http.NewServeMux()
-// 	healthzHandler := newHealthzHandler(mongoClient, redisPool)
-// 	// TODO readyz: it should probably somehow ensure harvester is up and running
-// 	mux.HandleFunc("/healthz", healthzHandler)
-// 	if err := http.ListenAndServe(":8080", mux); err != nil {
-// 		l.Logf("healthz: %v", err)
-// 	}
-// }
-
-// func newHealthzHandler(mongoClient *mongo.Client, redisPool *redis.Pool) func(w http.ResponseWriter, r *http.Request) {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		ctx := r.Context()
-// 		if err := mongoClient.Ping(ctx, nil); err != nil {
-// 			w.WriteHeader(http.StatusInternalServerError)
-// 			return
-// 		}
-// 		c, err := redisPool.DialContext(ctx)
-// 		if err != nil {
-// 			w.WriteHeader(http.StatusInternalServerError)
-// 			return
-// 		}
-// 		defer c.Close()
-// 		if err := c.Send("PING"); err != nil {
-// 			w.WriteHeader(http.StatusInternalServerError)
-// 			return
-// 		}
-// 	}
-// }
 
 func WaitForShutdownSignal(cf ...func()) {
 	done := make(chan os.Signal, 1)

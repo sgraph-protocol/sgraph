@@ -6,7 +6,7 @@
 use anchor_lang::prelude::*;
 use graph::{
     program::Graph, spl_account_compression::program::SplAccountCompression,
-    spl_account_compression::Wrapper, AddRelationParams, Controller, InitializeProviderParams,
+    spl_account_compression::Noop, AddRelationParams, Controller, InitializeProviderParams,
     Provider, CONTROLLER_SEED,
 };
 
@@ -113,7 +113,7 @@ pub struct SignRelation<'info> {
     pub payer: Signer<'info>,
 
     pub ac_program: Program<'info, SplAccountCompression>,
-    pub noop_program: Program<'info, Wrapper>,
+    pub noop_program: Program<'info, Noop>,
     pub graph_program: Program<'info, Graph>,
 }
 

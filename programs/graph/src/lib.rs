@@ -2,8 +2,8 @@
 #![deny(clippy::all)]
 #![allow(clippy::result_large_err)]
 
-use anchor_lang::{prelude::*, solana_program::keccak, AnchorDeserialize, AnchorSerialize};
-use spl_account_compression::{cpi as spl_ac_cpi, program::SplAccountCompression, Node, Wrapper};
+use anchor_lang::{prelude::*, solana_program::keccak, AnchorDeserialize, AnchorSerialize, Id};
+use spl_account_compression::{cpi as spl_ac_cpi, program::SplAccountCompression, Node, Noop};
 
 pub use spl_account_compression;
 
@@ -25,7 +25,7 @@ pub mod graph {
         let accounts = spl_ac_cpi::accounts::Initialize {
             merkle_tree: ctx.accounts.tree.to_account_info(),
             authority: ctx.accounts.tree_controller.to_account_info(),
-            log_wrapper: ctx.accounts.noop_program.to_account_info(),
+            noop: ctx.accounts.noop_program.to_account_info(),
         };
 
         let signer_seeds: &[&[&[u8]]] = &[&[
@@ -60,6 +60,7 @@ pub mod graph {
             relations_count: 0,
         };
         ctx.accounts.provider.set_inner(provider);
+        spl_account_compression::program::SplAccountCompression::id();
         Ok(())
     }
 
@@ -83,7 +84,7 @@ pub mod graph {
         let accounts = spl_ac_cpi::accounts::Modify {
             merkle_tree: ctx.accounts.tree.to_account_info(),
             authority: ctx.accounts.tree_controller.to_account_info(),
-            log_wrapper: ctx.accounts.noop_program.to_account_info(),
+            noop: ctx.accounts.noop_program.to_account_info(),
         };
 
         let bump = *ctx.bumps.get("tree_controller").unwrap();
@@ -149,7 +150,7 @@ pub struct InitializeTree<'info> {
     pub payer: Signer<'info>,
 
     pub ac_program: Program<'info, SplAccountCompression>,
-    pub noop_program: Program<'info, Wrapper>,
+    pub noop_program: Program<'info, Noop>,
     pub system_program: Program<'info, System>,
 }
 
@@ -175,7 +176,7 @@ pub struct AddRelation<'info> {
     pub payer: Signer<'info>,
 
     pub ac_program: Program<'info, SplAccountCompression>,
-    pub noop_program: Program<'info, Wrapper>,
+    pub noop_program: Program<'info, Noop>,
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
@@ -185,6 +186,7 @@ pub struct AddRelationParams {
     pub extra: Vec<u8>,
 }
 
+#[derive(Debug, PartialEq)]
 #[account]
 pub struct Provider {
     pub authority: Pubkey,

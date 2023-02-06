@@ -1,4 +1,5 @@
 # sgraph
+[![Rust Test](https://github.com/sgraph-protocol/sgraph/actions/workflows/rust-test.yml/badge.svg)](https://github.com/sgraph-protocol/sgraph/actions/workflows/rust-test.yml)
 
 Welcome to [sgraph](https://sgraph.io) monorepo
 
