@@ -1,0 +1,71 @@
+name: Rust Test
+on:
+  push:
+    branches: ["master", "testing"]
+  pull_request:
+    branches: ["master"]
+
+env:
+  CARGO_TERM_COLOR: always
+  SOLANA_VERSION: "1.14.13"
+  RUST_TOOLCHAIN: "1.67.0"
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Rust version
+        run: rustup toolchain install ${{ env.RUST_TOOLCHAIN }} --component rustfmt
+
+      - name: Run fmt
+        run: cargo fmt -- --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Set Rust version
+        run: rustup toolchain install ${{ env.RUST_TOOLCHAIN }} --component clippy
+
+      - name: Run clippy
+        run: cargo clippy
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Set Rust version
+        run: rustup toolchain install ${{ env.RUST_TOOLCHAIN }}
+
+      - name: Install Solana
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v${{ env.SOLANA_VERSION }}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+          export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
+          solana --version
+          echo "Generating keypair..."
+          solana-keygen new -o "$HOME/.config/solana/id.json" --no-passphrase --silent
+
+      - name: Build all deps
+        run: |
+          cargo build-bpf || true
+          cargo +bpf build-bpf
+
+      - name: Run bpf tests
+        run: cargo +bpf test-bpf

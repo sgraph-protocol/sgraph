@@ -23,6 +23,7 @@ import fs from 'fs/promises'
    await new Promise((resolve) => setTimeout(resolve, 5000))
 
    const treeSpace = getConcurrentMerkleTreeAccountSize(30, 2048, 15)
+   console.log("space required:", treeSpace)
    const lamports = await prov.connection.getMinimumBalanceForRentExemption(treeSpace)
 
    console.log("need", lamports / web3.LAMPORTS_PER_SOL, "lamports")

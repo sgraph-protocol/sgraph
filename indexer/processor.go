@@ -266,7 +266,7 @@ func (p Processor) findAddInst(tx cli.Tx) []addIx {
 			continue
 		}
 
-		if len(inst.Data) < 8 && !bytes.Equal(inst.Data[:8], graph.InstructionAddRelation[:]) {
+		if len(inst.Data) < 8 && !bytes.Equal(inst.Data[:8], graph.AddRelationInstructionDiscriminator[:]) {
 			// not an add_relation instruction
 			continue
 		}
