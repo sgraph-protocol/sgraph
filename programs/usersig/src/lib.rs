@@ -4,7 +4,7 @@
 #![allow(clippy::result_large_err)]
 
 use anchor_lang::prelude::*;
-use graph::{
+use sgraph::{
     program::Graph, spl_account_compression::program::SplAccountCompression,
     spl_account_compression::Noop, AddRelationParams, Controller, InitializeProviderParams,
     Provider, CONTROLLER_SEED,
@@ -39,7 +39,7 @@ pub mod usersig {
             .initialize_provider_ctx()
             .with_signer(signer_seeds);
 
-        graph::cpi::initialize_provider(ctx, params)?;
+        sgraph::cpi::initialize_provider(ctx, params)?;
 
         Ok(())
     }
@@ -56,7 +56,7 @@ pub mod usersig {
         let signer_seeds: &[&[&[u8]]] = &[&[b"provider", &[bump]]];
 
         let ctx = ctx.accounts.add_relation_ctx().with_signer(signer_seeds);
-        graph::cpi::add_relation(ctx, params)?;
+        sgraph::cpi::add_relation(ctx, params)?;
 
         Ok(())
     }
@@ -77,9 +77,9 @@ pub struct Initialize<'info> {
 impl<'info> Initialize<'info> {
     pub fn initialize_provider_ctx(
         &self,
-    ) -> CpiContext<'_, '_, '_, 'info, graph::cpi::accounts::InitializeProvider<'info>> {
+    ) -> CpiContext<'_, '_, '_, 'info, sgraph::cpi::accounts::InitializeProvider<'info>> {
         let cpi_program = self.graph_program.to_account_info();
-        let cpi_accounts = graph::cpi::accounts::InitializeProvider {
+        let cpi_accounts = sgraph::cpi::accounts::InitializeProvider {
             payer: self.payer.to_account_info(),
             provider: self.provider.to_account_info(),
             system_program: self.system_program.to_account_info(),
@@ -120,10 +120,10 @@ pub struct SignRelation<'info> {
 impl<'info> SignRelation<'info> {
     pub fn add_relation_ctx(
         &self,
-    ) -> CpiContext<'_, '_, '_, 'info, graph::cpi::accounts::AddRelation<'info>> {
+    ) -> CpiContext<'_, '_, '_, 'info, sgraph::cpi::accounts::AddRelation<'info>> {
         let cpi_program = self.graph_program.to_account_info();
 
-        let cpi_accounts = graph::cpi::accounts::AddRelation {
+        let cpi_accounts = sgraph::cpi::accounts::AddRelation {
             provider: self.provider.to_account_info(),
             authority: self.provider.to_account_info(),
             tree: self.tree.to_account_info(),

@@ -1,7 +1,11 @@
 [package]
-name = "usersig"
+name = "sgraph-usersig"
 version = "0.1.0"
 description = "Created with Anchor"
+license = "Apache-2.0"
+documentation = "https://docs.rs/sgraph-usersig"
+homepage = "https://sgraph.io"
+repository = "https://github.com/sgraph-protocol/sgraph"
 edition = "2021"
 
 [lib]
@@ -17,5 +21,5 @@ default = []
 
 [dependencies]
 anchor-lang = "0.26.0"
-graph = {path = "../graph", features = ["cpi"]}
+sgraph = {path = "../graph", version = "0.1.0", features = ["cpi"]}
 solana-security-txt = "1.1.0"

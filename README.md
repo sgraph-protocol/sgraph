@@ -1,5 +1,6 @@
 # sgraph
 [![Rust Test](https://github.com/sgraph-protocol/sgraph/actions/workflows/rust-test.yml/badge.svg)](https://github.com/sgraph-protocol/sgraph/actions/workflows/rust-test.yml)
+[![docs](https://img.shields.io/docsrs/sgraph)](https://docs.rs/sgraph)
 
 Welcome to [sgraph](https://sgraph.io) monorepo
 
@@ -69,10 +70,10 @@ npx ts-node sdk/js/_examples/full.ts
 ## Program details
 
 **Addresses:**
-|         	| Mainnet/Devnet/Testnet                      	| Provider addr                                	|
-|---------	|---------------------------------------------	|----------------------------------------------	|
-| graph   	| graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg 	| N/A                                          	|
-| usersig 	| s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2 	| 8MgDy6gEztWYsS2PKhBkYPCVDb6VQJ4XkTChtwayXvyB 	|
+|         | Crates/Docs                                                                                                                                                                                            | Mainnet/Devnet/Testnet                      | Provider addr                                |
+|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|----------------------------------------------|
+| graph   | [![crates badge](https://img.shields.io/crates/v/sgraph.svg)](https://crates.io/crates/sgraph) [![docs](https://img.shields.io/docsrs/sgraph)](https://docs.rs/sgraph)                                 | graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg | N/A                                          |
+| usersig | [![crates badge](https://img.shields.io/crates/v/sgraph-usersig.svg)](https://crates.io/crates/sgraph-usersig) [![docs](https://img.shields.io/docsrs/sgraph-usersig)](https://docs.rs/sgraph-usersig) | s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2 | 8MgDy6gEztWYsS2PKhBkYPCVDb6VQJ4XkTChtwayXvyB |
 
 **Public indexer instances:**
 | env     	| url                       	|
@@ -92,7 +93,6 @@ Coming soon: Events
 * Events will be sent by a provider, so you are free to choose from whom to consume the events
 
 **TODO:**
-- [ ] CI/CD
 - [ ] Integration tests
 - [ ] More SDK helpers
 - [ ] More providers!
