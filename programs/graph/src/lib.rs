@@ -114,8 +114,11 @@ pub mod graph {
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct InitializeProviderParams {
+    // authority that must sign transactions to create relations
     pub authority: Pubkey,
+    // name of the provider
     pub name: String,
+    // url to docs of the provider
     pub website: String,
 }
 

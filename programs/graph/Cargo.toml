@@ -1,12 +1,18 @@
 [package]
-name = "graph"
-version = "0.5.0"
+name = "sgraph"
+version = "0.1.2"
 description = "Created with Anchor"
 edition = "2021"
+license = "Apache-2.0"
+documentation = "https://docs.rs/sgraph-usersig"
+homepage = "https://sgraph.io"
+repository = "https://github.com/sgraph-protocol/sgraph"
+readme = "../../README.md"
+
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "graph"
+name = "sgraph"
 doctest = false
 
 [features]

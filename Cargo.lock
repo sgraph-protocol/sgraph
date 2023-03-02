@@ -1454,23 +1454,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "graph"
-version = "0.5.0"
-dependencies = [
- "anchor-lang",
- "anyhow",
- "solana-logger",
- "solana-program",
- "solana-program-test",
- "solana-sdk",
- "solana-security-txt",
- "spl-account-compression",
- "spl-associated-token-account",
- "spl-noop",
- "spl-token",
-]
-
-[[package]]
 name = "h2"
 version = "0.3.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3094,6 +3077,32 @@ dependencies = [
  "ryu",
  "serde",
  "yaml-rust",
+]
+
+[[package]]
+name = "sgraph"
+version = "0.1.2"
+dependencies = [
+ "anchor-lang",
+ "anyhow",
+ "solana-logger",
+ "solana-program",
+ "solana-program-test",
+ "solana-sdk",
+ "solana-security-txt",
+ "spl-account-compression",
+ "spl-associated-token-account",
+ "spl-noop",
+ "spl-token",
+]
+
+[[package]]
+name = "sgraph-usersig"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "sgraph",
+ "solana-security-txt",
 ]
 
 [[package]]
@@ -4774,15 +4783,6 @@ dependencies = [
  "form_urlencoded",
  "idna",
  "percent-encoding",
-]
-
-[[package]]
-name = "usersig"
-version = "0.1.0"
-dependencies = [
- "anchor-lang",
- "graph",
- "solana-security-txt",
 ]
 
 [[package]]
