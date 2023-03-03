@@ -19,7 +19,7 @@ struct SolanaCookie {
 
 impl SolanaCookie {
     async fn new() -> Self {
-        let mut test = ProgramTest::new("graph", graph::id(), processor!(graph::entry));
+        let mut test = ProgramTest::new("sgraph", sgraph::id(), processor!(sgraph::entry));
 
         test.add_program(
             "noop",
@@ -83,9 +83,9 @@ async fn test_basic() -> Result<(), anyhow::Error> {
         &spl_account_compression::id(),
     );
 
-    let controller = Pubkey::find_program_address(&[b"controller"], &graph::id()).0;
+    let controller = Pubkey::find_program_address(&[b"controller"], &sgraph::id()).0;
 
-    let accounts = graph::accounts::InitializeTree {
+    let accounts = sgraph::accounts::InitializeTree {
         tree: tree.pubkey(),
         tree_controller: controller,
         authority: authority.pubkey(),
@@ -95,9 +95,9 @@ async fn test_basic() -> Result<(), anyhow::Error> {
         system_program: system_program::id(),
     };
 
-    let data = graph::instruction::InitializeTree {};
+    let data = sgraph::instruction::InitializeTree {};
 
-    let init = make_instruction(graph::ID, &accounts, data);
+    let init = make_instruction(sgraph::ID, &accounts, data);
 
     cookie
         .send_transaction(&[create.clone(), init], vec![&tree, &authority])
@@ -108,27 +108,27 @@ async fn test_basic() -> Result<(), anyhow::Error> {
     let provider_authority = Keypair::new();
 
     // add example provider to tree
-    let accounts = graph::accounts::InitializeProvider {
+    let accounts = sgraph::accounts::InitializeProvider {
         provider: provider.pubkey(),
         payer: cookie.fp.pubkey(),
         system_program: system_program::id(),
     };
 
-    let data = graph::instruction::InitializeProvider {
-        args: graph::InitializeProviderParams {
+    let data = sgraph::instruction::InitializeProvider {
+        args: sgraph::InitializeProviderParams {
             authority: provider_authority.pubkey(),
             name: "example".to_string(),
             website: "https://example.com".to_string(),
         },
     };
 
-    let init_prov = make_instruction(graph::ID, &accounts, data);
+    let init_prov = make_instruction(sgraph::ID, &accounts, data);
     cookie
         .send_transaction(&[init_prov, create], vec![&tree, &provider])
         .await?;
 
     // add instruction
-    let accounts = graph::accounts::AddRelation {
+    let accounts = sgraph::accounts::AddRelation {
         provider: provider.pubkey(),
         authority: provider_authority.pubkey(),
         tree: tree.pubkey(),
@@ -138,15 +138,15 @@ async fn test_basic() -> Result<(), anyhow::Error> {
         noop_program: spl_noop::id(),
     };
 
-    let data = graph::instruction::AddRelation {
-        args: graph::AddRelationParams {
+    let data = sgraph::instruction::AddRelation {
+        args: sgraph::AddRelationParams {
             from: Pubkey::new_unique(),
             to: Pubkey::new_unique(),
             extra: vec![1, 2, 3],
         },
     };
 
-    let add = make_instruction(graph::ID, &accounts, data);
+    let add = make_instruction(sgraph::ID, &accounts, data);
     cookie
         .send_transaction(&[add], vec![&provider_authority])
         .await?;
