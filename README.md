@@ -72,8 +72,15 @@ npx ts-node sdk/js/_examples/full.ts
 **Addresses:**
 |         | Crates/Docs                                                                                                                                                                                            | Mainnet/Devnet/Testnet                      | Provider addr                                |
 |---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|----------------------------------------------|
-| graph   | [![crates badge](https://img.shields.io/crates/v/sgraph.svg)](https://crates.io/crates/sgraph) [![docs](https://img.shields.io/docsrs/sgraph)](https://docs.rs/sgraph)                                 | graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg | N/A                                          |
-| usersig | [![crates badge](https://img.shields.io/crates/v/sgraph-usersig.svg)](https://crates.io/crates/sgraph-usersig) [![docs](https://img.shields.io/docsrs/sgraph-usersig)](https://docs.rs/sgraph-usersig) | s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2 | 8MgDy6gEztWYsS2PKhBkYPCVDb6VQJ4XkTChtwayXvyB |
+| graph   | [![crates badge](https://img.shields.io/crates/v/sgraph.svg)](https://crates.io/crates/sgraph) [![docs](https://img.shields.io/docsrs/sgraph)](https://docs.rs/sgraph)                                 | `graph8zS8zjLVJHdiSvP7S9PP7hNJpnHdbnJLR81FMg` | N/A                                          |
+| usersig | [![crates badge](https://img.shields.io/crates/v/sgraph-usersig.svg)](https://crates.io/crates/sgraph-usersig) [![docs](https://img.shields.io/docsrs/sgraph-usersig)](https://docs.rs/sgraph-usersig) | `s1gsZrDJAXNYSCRhQZk5X3mYyBjAmaVBTYnNhCzj8t2` | `8MgDy6gEztWYsS2PKhBkYPCVDb6VQJ4XkTChtwayXvyB` |
+
+**Other Providers:**
+| Provider name                | Provider address                               |
+|------------------------------|------------------------------------------------|
+| hmn.xyz NFT suggestions      | `HS1pxuGdbkHs6kAX9h1DZ2hQ48pWFZhqaVFqVhqMyPb`  |
+| hmn.xyz Twitter suggestions  | `A9P2PKVb4Gj48atoARkcBheb8mrqMGPCxJxxXY3gEjAa` |
+| hmn.xyz Category suggestions | `D3JbiQHTxZvKXWUWEwhtTKQtG14xDmLCubhMNpATxdfo` |
 
 **Public indexer instances:**
 | env     	| url                       	|
